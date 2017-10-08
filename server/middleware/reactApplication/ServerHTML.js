@@ -40,7 +40,16 @@ function scriptTag(jsFilePath) {
 // COMPONENT
 
 function ServerHTML(props) {
-  const { asyncComponentsState, helmet, styleElement, nonce, reactAppString } = props;
+  const {
+    asyncComponentsState,
+    helmet,
+    styleElement,
+    jobsState,
+    nonce,
+    reactAppString,
+    routerState,
+    storeState,
+  } = props;
 
   // Creates an inline script definition that is protected by the nonce.
   const inlineScript = body => (
@@ -57,10 +66,14 @@ function ServerHTML(props) {
   ]);
 
   const bodyElements = removeNil([
+    // Bind our redux store state so the client knows how to hydrate his one
+    ifElse(storeState)(() => inlineScript(`window.__APP_STATE__=${serialize(storeState)};`)),
+
     // Binds the client configuration object to the window object so
     // that we can safely expose some configuration values to the
     // client bundle that gets executed in the browser.
     <ClientConfig nonce={nonce} />,
+
     // Bind our async components state so the client knows which ones
     // to initialise so that the checksum matches the server response.
     // @see https://github.com/ctrlplusb/react-async-component
@@ -69,6 +82,11 @@ function ServerHTML(props) {
         `window.__ASYNC_COMPONENTS_REHYDRATE_STATE__=${serialize(asyncComponentsState)};`,
       ),
     ),
+
+    ifElse(jobsState)(() => inlineScript(`window.__JOBS_STATE__=${serialize(jobsState)}`)),
+
+    ifElse(routerState)(() => inlineScript(`window.__ROUTER_STATE__=${serialize(routerState)}`)),
+
     // Enable the polyfill io script?
     // This can't be configured within a react-helmet component as we
     // may need the polyfill's before our client JS gets parsed.
@@ -110,9 +128,14 @@ ServerHTML.propTypes = {
   asyncComponentsState: PropTypes.object,
   // eslint-disable-next-line react/forbid-prop-types
   helmet: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  jobsState: PropTypes.object,
   nonce: PropTypes.string,
   reactAppString: PropTypes.string,
   // eslint-disable-next-line react/forbid-prop-types
+  routerState: PropTypes.object,
+  // eslint-disable-next-line react/forbid-prop-types
+  storeState: PropTypes.object,
   styleElement: PropTypes.array,
 };
 
