@@ -4,6 +4,7 @@ import React from 'react';
 import Switch from 'react-router-dom/Switch';
 import Route from 'react-router-dom/Route';
 import Helmet from 'react-helmet';
+import styled from 'styled-components';
 
 import config from '../../../config';
 
@@ -15,6 +16,11 @@ import Header from './Header';
 import AsyncHomeRoute from './AsyncHomeRoute';
 import AsyncCounterRoute from './AsyncCounterRoute';
 import AsyncAboutRoute from './AsyncAboutRoute';
+
+const Test = styled.div`
+  width: 100%;
+  background-color: blue;
+`;
 
 function DemoApp() {
   return (
@@ -29,9 +35,7 @@ function DemoApp() {
         <meta name="msapplication-TileColor" content="#2b2b2b" />
         <meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png" />
         <meta name="theme-color" content="#2b2b2b" />
-        <title>
-          {config('htmlPage.defaultTitle')}
-        </title>
+        <title>{config('htmlPage.defaultTitle')}</title>
         {/*
           A great reference for favicons:
           https://github.com/audreyr/favicon-cheat-sheet
@@ -114,6 +118,7 @@ function DemoApp() {
         />
       </Helmet>
       <Header />
+      <Test>Test</Test>
       <div style={{ paddingTop: '2rem', paddingBottom: '2rem' }}>
         <Switch>
           <Route exact path="/" component={AsyncHomeRoute} />

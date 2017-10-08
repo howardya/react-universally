@@ -50,7 +50,8 @@
     "universal",
     "javascript",
     "express",
-    "webpack"
+    "webpack",
+    "styled-components"
   ],
   "license": "MIT",
   "bugs": {
@@ -69,7 +70,7 @@
     "modernizr": "3.5.0",
     "normalize.css": "7.0.0",
     "offline-plugin": "4.8.3",
-    "pretty-error": "2.1.1",    
+    "pretty-error": "2.1.1",
     "prop-types": "15.5.10",
     "react": "15.6.1",
     "react-async-bootstrapper": "1.1.1",
@@ -78,6 +79,7 @@
     "react-helmet": "5.2.0",
     "react-router-dom": "4.2.2",
     "serialize-javascript": "1.4.0",
+    "styled-components": "^2.2.0",
     "uuid": "3.1.0"
   },
   "devDependencies": {
@@ -85,8 +87,9 @@
     "babel-cli": "6.26.0",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
-    "babel-jest": "21.0.2",
-    "babel-loader": "7.1.2",
+    "babel-jest": "20.0.3",
+    "babel-loader": "7.1.1",
+    "babel-plugin-styled-components": "^1.2.0",
     "babel-plugin-transform-react-constant-elements": "6.23.0",
     "babel-plugin-transform-react-inline-elements": "6.22.0",
     "babel-plugin-transform-react-jsx-self": "6.22.0",

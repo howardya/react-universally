@@ -40,11 +40,12 @@ function scriptTag(jsFilePath) {
 // COMPONENT
 
 function ServerHTML(props) {
-  const { asyncComponentsState, helmet, nonce, reactAppString } = props;
+  const { asyncComponentsState, helmet, styleElement, nonce, reactAppString } = props;
 
   // Creates an inline script definition that is protected by the nonce.
-  const inlineScript = body =>
-    <script nonce={nonce} type="text/javascript" dangerouslySetInnerHTML={{ __html: body }} />;
+  const inlineScript = body => (
+    <script nonce={nonce} type="text/javascript" dangerouslySetInnerHTML={{ __html: body }} />
+  );
 
   const headerElements = removeNil([
     ...ifElse(helmet)(() => helmet.meta.toComponent(), []),
@@ -94,17 +95,12 @@ function ServerHTML(props) {
   return (
     <HTML
       htmlAttributes={ifElse(helmet)(() => helmet.htmlAttributes.toComponent(), null)}
-      headerElements={headerElements.map((x, idx) =>
-        (<KeyedComponent key={idx}>
-          {x}
-        </KeyedComponent>),
-      )}
-      bodyElements={bodyElements.map((x, idx) =>
-        (<KeyedComponent key={idx}>
-          {x}
-        </KeyedComponent>),
-      )}
+      headerElements={headerElements.map((x, idx) => (
+        <KeyedComponent key={idx}>{x}</KeyedComponent>
+      ))}
+      bodyElements={bodyElements.map((x, idx) => <KeyedComponent key={idx}>{x}</KeyedComponent>)}
       appBodyString={reactAppString}
+      styleElement={styleElement}
     />
   );
 }
@@ -116,6 +112,8 @@ ServerHTML.propTypes = {
   helmet: PropTypes.object,
   nonce: PropTypes.string,
   reactAppString: PropTypes.string,
+  // eslint-disable-next-line react/forbid-prop-types
+  styleElement: PropTypes.array,
 };
 
 // EXPORT
